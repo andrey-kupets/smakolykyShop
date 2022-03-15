@@ -1,6 +1,10 @@
 import {Document, Model, model, Schema} from 'mongoose';
 
-export const UserSchema: Schema = new Schema<any>({// TODO interface
+import { IUser } from '../../models';
+
+export type UserType = IUser & Document;
+
+export const UserSchema: Schema = new Schema<IUser>({
   name: {
     type: String,
     required: true
@@ -29,7 +33,7 @@ export const UserSchema: Schema = new Schema<any>({// TODO interface
   },
   phone: {
     type: String,
-    required: true
+    required: false
   },
   gender: {
     type: String,
@@ -37,7 +41,7 @@ export const UserSchema: Schema = new Schema<any>({// TODO interface
   },
   photo: {
     type: String,
-    required: true
+    required: false
   },
   status: {
     type: String,
@@ -45,9 +49,9 @@ export const UserSchema: Schema = new Schema<any>({// TODO interface
     default: 'pending'
   },
   createdAt: {
-    type: Date,
-    default: Date.now()
+    type: Date as any, // TODO fix incompatible types
+    default: Date.now() as any
   }
 });
 
-export const User: Model<any> = model('users', UserSchema);
+export const User: Model<any> = model<UserType>('users', UserSchema);
