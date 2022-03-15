@@ -129,7 +129,7 @@ module.exports = {
     'yoda': 'error',
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': 'off',
-    '@typescript-eslint/ban-types': 'error',
+    '@typescript-eslint/ban-types': 'off', // TODO
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/class-name-casing': 'off', // TODO
     '@typescript-eslint/consistent-type-assertions': 'error',
