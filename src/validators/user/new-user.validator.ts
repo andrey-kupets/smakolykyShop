@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import { GenderEnum, RegExpEnum } from '../../constants';
 
 export const newUserValidator = Joi.object({
   name: Joi
@@ -14,13 +15,15 @@ export const newUserValidator = Joi.object({
     .min(2)
     .max(48)
     .required(),
-  email: Joi // TODO const
+  email: Joi
     .string()
     .trim()
+    .regex(RegExpEnum.email)
     .required(),
-  password: Joi // TODO const
+  password: Joi
     .string()
     .trim()
+    .regex(RegExpEnum.password)
     .required(),
   age: Joi
     .number()
@@ -28,12 +31,13 @@ export const newUserValidator = Joi.object({
     .min(1)
     .max(120)
     .required(),
-  phone: Joi // TODO const
+  phone: Joi
     .string()
-    .trim(),
+    .trim()
+    .regex(RegExpEnum.phone),
   gender: Joi
     .string()
     .trim()
-    .allow('male', 'female')
+    .allow(GenderEnum.MALE, GenderEnum.FEMALE)
     .required()
 });

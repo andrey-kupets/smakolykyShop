@@ -6,7 +6,7 @@ import { config } from './config';
 const server = http.createServer(app);
 
 server.listen(config.PORT, () => {
-  console.log(`Port 5000 is being listened`);
+  console.log(`Port ${config.PORT} is being listened`);
 });
 
 process.on('SIGTERM', () => {
