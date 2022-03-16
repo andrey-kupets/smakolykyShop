@@ -12,7 +12,7 @@ class UserController {
       // TODO hash pass
       await userService.createUser(user);
 
-      res.status(200).json('user created');
+      res.sendStatus(201);
     } catch (e) {
       next(e);
     }
