@@ -8,7 +8,9 @@ import * as dotenv from 'dotenv';
 import * as morgan from 'morgan';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
+
 import { config } from './config';
+import { userRouter } from './routes';
 
 dotenv.config();
 
@@ -76,9 +78,9 @@ class App {
   };
 
   private mountRoutes(): void {
-    this.app.use('/admin', adminRouter);
-    this.app.use('/auth', authRouter);
-    this.app.use('/products', productRouter);
+    // this.app.use('/admin', adminRouter);
+    // this.app.use('/auth', authRouter);
+    // this.app.use('/products', productRouter);
     this.app.use('/users', userRouter);
   }
 }
