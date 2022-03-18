@@ -1,0 +1,7 @@
+extends src/email-templates/template
+block content
+    div
+        | Welcome to smakolyky
+        | Click here for confirmation
+        div
+            a(href=frontendUrl + `/email/confirm/#{token}`) HERE IS 
