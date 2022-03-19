@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import * as Joi from 'joi';
 
-import { userService } from '../../services';
+import { ActionEnum } from '../../constants';
+import { hashPassword } from '../../helpers';
+import { mailService, userService } from '../../services';
 import { newUserValidator } from '../../validators';
 import { IUser } from '../../models';
-import { hashPassword } from '../../helpers';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
@@ -18,6 +19,7 @@ class UserController {
     user.password = await hashPassword(user.password);
 
     await userService.createUser(user);
+    await mailService.sendMail(user.email, ActionEnum.USER_REGISTER, {token: 'xxx'});
 
     res.sendStatus(201);
   }

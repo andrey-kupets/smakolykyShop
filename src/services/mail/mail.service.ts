@@ -22,12 +22,13 @@ const transporter = nodemailer.createTransport({
 const emailTemplates = new EmailTemplates({
   message: {},
   views: {
-    root: path.resolve((global as any).appRoot, 'email-templates', 'templates')
+    // root: path.resolve((global as any).appRoot, 'email-templates', 'templates')
+    root: path.resolve(__dirname, '../../', 'email-templates')
   }
 });
 
 export class MailService {
-  async sendMail(email: string, action: ActionEnum, context: any = {}) {
+  async sendMail(email: string, action: ActionEnum, context: any = {}): Promise<void> {
     const templateInfo = htmlTemplates[action];
 
     if (!templateInfo) {
