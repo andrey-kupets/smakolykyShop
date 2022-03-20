@@ -2,6 +2,6 @@ extends template
 block content
     div
         | Welcome to smakolyky
-        | Click here for confirmation
+        | Click for confirmation
         div
-            a(href=frontendUrl + `/email/confirm/#{token}`) HERE IS
+            a(href=frontendUrl + `/email/confirm/` + token) HERE

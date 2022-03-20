@@ -22,7 +22,6 @@ const transporter = nodemailer.createTransport({
 const emailTemplates = new EmailTemplates({
   message: {},
   views: {
-    // root: path.resolve((global as any).appRoot, 'email-templates', 'templates')
     root: path.resolve(__dirname, '../../', 'email-templates')
   }
 });
@@ -39,14 +38,12 @@ export class MailService {
 
     const html = await emailTemplates.render(templateInfo.templateFileName, context);
 
-    const mailOption = {
+    await transporter.sendMail({
       from: `NO REPLY <${config.ROOT_EMAIL}>`,
       to: email,
       subject: templateInfo.subject,
       html
-    };
-
-    await transporter.sendMail(mailOption);
+    });
   }
 }
 
