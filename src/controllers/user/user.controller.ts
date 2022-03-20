@@ -6,6 +6,7 @@ import { hashPassword } from '../../helpers';
 import { mailService, userService } from '../../services';
 import { newUserValidator } from '../../validators';
 import { IUser } from '../../models';
+import { tokenizer } from '../../helpers/tokenizer';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
@@ -19,7 +20,12 @@ class UserController {
     user.password = await hashPassword(user.password);
 
     await userService.createUser(user);
-    await mailService.sendMail(user.email, ActionEnum.USER_REGISTER, {token: 'xxx'});
+
+    const {access_token} = tokenizer(ActionEnum.USER_REGISTER);
+
+    //TODO set token to db
+
+    await mailService.sendMail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
     res.sendStatus(201);
   }

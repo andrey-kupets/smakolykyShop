@@ -7,6 +7,15 @@ import { config } from '../../config';
 import { htmlTemplates } from '../../email-templates';
 import { ErrorHandler } from '../../errors';
 
+if (
+  !config.FRONTEND_URL
+  || !config.ROOT_EMAIL_SERVICE
+  || !config.ROOT_EMAIL
+  || !config.ROOT_EMAIL_PASSWORD
+) {
+  throw Error('Root email credentials are not defined');
+}
+
 const contextExtension = {
   frontendUrl: config.FRONTEND_URL
 };
