@@ -3,5 +3,14 @@ export const customErrors = {
   BAD_REQUEST_USER_REGISTERED: {
     message: 'User is already registered',
     code: 4001
+  },
+
+  BAD_REQUEST_NO_TOKEN: {
+    message: 'Token not found'
+  },
+
+  //404
+  NOT_FOUND: {
+    message: 'Record not found'
   }
 };
