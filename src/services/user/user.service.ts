@@ -1,15 +1,28 @@
+import { Types } from 'mongoose';
+
 import { UserModel } from '../../database';
-import { IUser } from '../../models';
+import { IUser, IUserToken } from '../../models';
 
 class UserService {
-  createUser(user: Partial<IUser>) {
+  createUser(user: Partial<IUser>): Promise<IUser> {
     const userToCreate = new UserModel(user);
 
     return userToCreate.save();
   }
 
-  findOneByParams(findObject: Partial<IUser>) {
-    return UserModel.findOne(findObject);
+  addActionToken(id: string, tokenObject: IUserToken): Promise<IUser> {
+    return UserModel.updateOne(
+      { _id: Types.ObjectId(id)},
+      {
+        $push: {
+          tokens: tokenObject // as any
+        }
+      }
+    ) as any;
+  }
+
+  findOneByParams(findObject: Partial<IUser>): Promise<IUser | null> {
+    return UserModel.findOne(findObject) as any;
   }
 }
 

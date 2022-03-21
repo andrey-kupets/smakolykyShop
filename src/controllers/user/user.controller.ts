@@ -2,11 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import * as Joi from 'joi';
 
 import { ActionEnum } from '../../constants';
-import { hashPassword } from '../../helpers';
+import { hashPassword, tokenizer } from '../../helpers';
 import { mailService, userService } from '../../services';
 import { newUserValidator } from '../../validators';
 import { IUser } from '../../models';
-import { tokenizer } from '../../helpers/tokenizer';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
@@ -19,15 +18,20 @@ class UserController {
 
     user.password = await hashPassword(user.password);
 
-    await userService.createUser(user);
+    const { _id } = await userService.createUser(user);
 
     const {access_token} = tokenizer(ActionEnum.USER_REGISTER);
 
-    //TODO set token to db
+    await userService.addActionToken(_id, { action: ActionEnum.USER_REGISTER, token: access_token });
 
     await mailService.sendMail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
     res.sendStatus(201);
+  }
+
+  confirmUser(req: Request, res: Response, next: NextFunction) {
+
+    res.end();
   }
 }
 

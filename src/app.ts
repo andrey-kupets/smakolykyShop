@@ -45,9 +45,12 @@ class App {
 
   private setupDB(): void {
     mongoose.connect(config.MONGODB_URL,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      {useNewUrlParser: true}
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+      }
     );
 
     const db = mongoose.connection;

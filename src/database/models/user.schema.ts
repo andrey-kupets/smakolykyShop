@@ -5,7 +5,12 @@ import { UserRoleEnum, UserStatusEnum } from '../../constants';
 
 export type UserType = IUser & Document;
 
-export const UserSchema: Schema = new Schema<IUser>({
+const tokenSubModel = {
+  token: String,
+  action: String
+};
+
+export const UserSchema = new Schema<IUser>({ // UserSchema: Schema
   name: {
     type: String,
     required: true
@@ -49,6 +54,7 @@ export const UserSchema: Schema = new Schema<IUser>({
     required: true,
     default: UserStatusEnum.PENDING
   },
+  tokens: [tokenSubModel],
   createdAt: {
     type: Date as any, // TODO fix incompatible types
     default: Date.now() as any
