@@ -5,6 +5,11 @@ export const customErrors = {
     code: 4001
   },
 
+  BAD_REQUEST_USER_ACTIVATED: {
+    message: 'User is already activated',
+    code: 4002
+  },
+
   BAD_REQUEST_NO_TOKEN: {
     message: 'Token not found'
   },

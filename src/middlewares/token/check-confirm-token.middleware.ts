@@ -1,9 +1,10 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { IRequestExtended } from '../../models';
 import { ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum } from '../../constants';
 import { customErrors, ErrorHandler } from '../../errors';
 import { userService } from '../../services';
 
-export const checkConfirmTokenMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const checkConfirmTokenMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction): Promise<void> => {
   const token = req.get(RequestHeadersEnum.AUTHORIZATION);
 
   if (!token) {
@@ -16,7 +17,7 @@ export const checkConfirmTokenMiddleware = async (req: Request, res: Response, n
     return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));
   }
 
-  // req.user = userByToken;
+  req.user = userByToken;
 
   next();
 };

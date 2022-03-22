@@ -13,7 +13,7 @@ class UserService {
 
   addActionToken(id: string, tokenObject: IUserToken): Promise<IUser> {
     return UserModel.updateOne(
-      { _id: Types.ObjectId(id)},
+      {_id: Types.ObjectId(id)},
       {
         $push: {
           tokens: tokenObject // as any
@@ -24,6 +24,10 @@ class UserService {
 
   findOneByParams(findObject: Partial<IUser>): Promise<IUser | null> {
     return UserModel.findOne(findObject) as any;
+  }
+
+  updateUserByParams(params: Partial<IUser>, update: Partial<IUser>): Promise<IUser> {
+    return UserModel.updateOne(params, update, {new: true}) as any;
   }
 
   findUserByActionToken(action: ActionEnum, token: string): Promise<IUser | null> {
