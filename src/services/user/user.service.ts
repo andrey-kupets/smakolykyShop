@@ -40,11 +40,9 @@ class UserService {
   }
 
   removeActionToken(token: string, index: number): Promise<IUser | null> {
-    // Remove field in 0-element of Array for exm; it maybe any element
     const tokenToDelete = `tokens.${index}.token`;
 
     return UserModel.updateOne(
-      // eslint-disable-next-line max-len
       {[tokenToDelete]: token},
       {$unset: {[tokenToDelete]: ''}}
     ) as any;
