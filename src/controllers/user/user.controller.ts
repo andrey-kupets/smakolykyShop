@@ -45,9 +45,7 @@ class UserController {
 
     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
 
-    const index = tokens.findIndex(({action, token}) => {
-      return action === ActionEnum.USER_REGISTER && token === tokenToDelete;
-    });
+    const index = tokens.findIndex(({action, token}) => action === ActionEnum.USER_REGISTER && token === tokenToDelete);
 
     if (index !== -1) {
       tokens.splice(index, 1);
