@@ -39,14 +39,16 @@ class UserService {
     }) as any;
   }
 
-  removeActionToken(token: string, index: number): Promise<IUser | null> {
-    const tokenToDelete = `tokens.${index}.token`;
-
-    return UserModel.updateOne(
-      {[tokenToDelete]: token},
-      {$unset: {[tokenToDelete]: ''}}
-    ) as any;
-  }
+  // removeActionToken(token: string, index: number): Promise<IUser | null> {
+  //   const tokenToDelete = `tokens.${index}.token`;
+  //   const elementToDelete = `tokens.${index}`;
+  //
+  //   return UserModel.updateOne(
+  //     {[tokenToDelete]: token},
+  //     // {$unset: {[tokenToDelete]: ''}} // remove 'token'-field
+  //     {$unset: {[elementToDelete]: ''}} // leave null
+  //   ) as any;
+  // }
 }
 
 export const userService = new UserService();

@@ -51,9 +51,11 @@ class UserController {
 
     if (index !== -1) {
       tokens.splice(index, 1);
+
+      await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
     }
 
-    await userService.removeActionToken(tokenToDelete as string, index);
+    // await userService.removeActionToken(tokenToDelete as string, index);
 
     res.end();
   }
