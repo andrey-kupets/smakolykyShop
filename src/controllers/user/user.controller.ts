@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import * as Joi from 'joi';
 
-import { ActionEnum, ResponseStatusCodesEnum, UserStatusEnum } from '../../constants';
+import { ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum } from '../../constants';
 import { hashPassword, tokenizer } from '../../helpers';
 import { mailService, userService } from '../../services';
 import { newUserValidator } from '../../validators';
@@ -27,11 +27,12 @@ class UserController {
 
     await mailService.sendMail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
-    res.sendStatus(201);
+    res.sendStatus(ResponseStatusCodesEnum.CREATED);
   }
 
   async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
-    const {_id, status} = req.user as IUser;
+    const {_id, status, tokens = []} = req.user as IUser;
+    const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
 
     if (status !== UserStatusEnum.PENDING) {
       return next(
@@ -43,6 +44,16 @@ class UserController {
     }
 
     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
+
+    const index = tokens.findIndex(({action, token}) => {
+      return action === ActionEnum.USER_REGISTER && token === tokenToDelete;
+    });
+
+    if (index !== -1) {
+      tokens.splice(index, 1);
+    }
+
+    await userService.removeActionToken(tokenToDelete as string, index);
 
     res.end();
   }

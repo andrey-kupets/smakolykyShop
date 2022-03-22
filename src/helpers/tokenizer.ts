@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 
-import { ActionEnum } from '../constants';
+import { ActionEnum, ResponseStatusCodesEnum } from '../constants';
 import { ErrorHandler } from '../errors';
 import { config } from '../config';
 
@@ -14,7 +14,7 @@ export const tokenizer = (action: ActionEnum): {access_token: string, refresh_to
       break;
 
     default:
-      throw new ErrorHandler(500, 'Wrong action-type');
+      throw new ErrorHandler(ResponseStatusCodesEnum.SERVER, 'Wrong action-type');
   }
 
   return {
