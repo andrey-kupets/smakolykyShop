@@ -16,7 +16,7 @@ class UserService {
       {_id: Types.ObjectId(id)},
       {
         $push: {
-          tokens: tokenObject // as any
+          tokens: tokenObject
         }
       }
     ) as any;

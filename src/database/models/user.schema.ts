@@ -1,7 +1,7 @@
 import {Document, Model, model, Schema} from 'mongoose';
 
 import { IUser } from '../../models';
-import { UserRoleEnum, UserStatusEnum } from '../../constants';
+import { TableNamesEnum, UserRoleEnum, UserStatusEnum } from '../../constants';
 
 export type UserType = IUser & Document;
 
@@ -61,4 +61,4 @@ export const UserSchema = new Schema<IUser>({ // UserSchema: Schema
   }
 });
 
-export const UserModel: Model<any> = model<UserType>('users', UserSchema);
+export const UserModel: Model<UserType> = model<UserType>(TableNamesEnum.USER, UserSchema);
