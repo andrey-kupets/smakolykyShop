@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import * as Joi from 'joi';
 
-import { ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum } from '../../constants';
+import { ActionEnum, LogEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum } from '../../constants';
 import { hashPassword, tokenizer } from '../../helpers';
-import { mailService, userService } from '../../services';
+import { logService, mailService, userService } from '../../services';
 import { newUserValidator } from '../../validators';
 import { IRequestExtended, IUser } from '../../models';
 import { customErrors, ErrorHandler } from '../../errors';
@@ -20,12 +20,11 @@ class UserController {
     user.password = await hashPassword(user.password);
 
     const {_id} = await userService.createUser(user);
-
     const {access_token} = tokenizer(ActionEnum.USER_REGISTER);
 
     await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
-
     await mailService.sendMail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
+    await logService.createLog({event: LogEnum.USER_REGISTER, userId: _id});
 
     res.sendStatus(ResponseStatusCodesEnum.CREATED);
   }
@@ -54,6 +53,7 @@ class UserController {
     }
 
     // await userService.removeActionToken(tokenToDelete as string, index);
+    await logService.createLog({event: LogEnum.USER_CONFIRMED, userId: _id});
 
     res.end();
   }

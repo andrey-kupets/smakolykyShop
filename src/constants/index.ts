@@ -1,6 +1,6 @@
 export * from './action.enum';
 export * from './gender.enum';
-export * from './logs.enum';
+export * from './log.enum';
 export * from './regexp.enum';
 export * from './request-headers.enum';
 export * from './response-status-codes.enum';

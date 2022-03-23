@@ -1,4 +1,4 @@
-import {Document, Model, model, Schema} from 'mongoose';
+import { Document, Model, model, Schema } from 'mongoose';
 
 import { IUser } from '../../models';
 import { TableNamesEnum, UserRoleEnum, UserStatusEnum } from '../../constants';
@@ -54,11 +54,7 @@ export const UserSchema = new Schema<IUser>({ // UserSchema: Schema
     required: true,
     default: UserStatusEnum.PENDING
   },
-  tokens: [tokenSubModel],
-  createdAt: {
-    type: Date as any, // TODO fix incompatible types
-    default: Date.now() as any
-  }
-});
+  tokens: [tokenSubModel]
+}, {timestamps: true});
 
 export const UserModel: Model<UserType> = model<UserType>(TableNamesEnum.USER, UserSchema);

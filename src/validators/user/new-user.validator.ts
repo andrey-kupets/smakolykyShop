@@ -4,7 +4,6 @@ import { GenderEnum, RegExpEnum } from '../../constants';
 export const newUserValidator = Joi.object({
   name: Joi
     .string()
-    .alphanum()
     .trim()
     .min(2)
     .max(24)

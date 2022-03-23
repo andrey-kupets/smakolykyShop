@@ -6,17 +6,16 @@ export interface IUserToken {
 }
 
 export interface IUser {
-  _id: string;
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  role: string;
-  age: number;
-  phone?: string;
-  gender?: string;
-  photo?: string;
-  status: string;
-  tokens?: [IUserToken];
-  createdAt: string;
+  _id: string
+  name: string
+  surname: string
+  email: string
+  password: string
+  role: string
+  age: number
+  phone?: string
+  gender?: string
+  photo?: string
+  status: string
+  tokens?: [IUserToken]
 }
