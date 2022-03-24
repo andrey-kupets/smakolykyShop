@@ -30,7 +30,8 @@ class UserController {
   }
 
   async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
-    const {_id, status, tokens = []} = req.user as IUser;
+    // const {_id, status, tokens = []} = req.user as IUser; // for 1st way
+    const {_id, status} = req.user as IUser; // for 2nd way
     const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
 
     if (status !== UserStatusEnum.PENDING) {
@@ -44,15 +45,18 @@ class UserController {
 
     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
 
-    const index = tokens.findIndex(({action, token}) => action === ActionEnum.USER_REGISTER && token === tokenToDelete);
+    // 1st way by js
+    // const index = tokens.findIndex(({action, token}) => action === ActionEnum.USER_REGISTER && token === tokenToDelete);
+    //
+    // if (index !== -1) {
+    //   tokens.splice(index, 1);
+    //
+    //   await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
+    // }
 
-    if (index !== -1) {
-      tokens.splice(index, 1);
-
-      await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
-    }
-
-    // await userService.removeActionToken(tokenToDelete as string, index);
+    // 2nd way by mongo
+    // await userService.removeActionToken(tokenToDelete as string, index as number); // for 2.1-way  $unset
+    await userService.removeActionToken(tokenToDelete as string); // for 2.2-way $pull
     await logService.createLog({event: LogEnum.USER_CONFIRMED, userId: _id});
 
     res.end();

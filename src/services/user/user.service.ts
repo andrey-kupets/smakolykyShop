@@ -39,16 +39,22 @@ class UserService {
     }) as any;
   }
 
-  // removeActionToken(token: string, index: number): Promise<IUser | null> {
-  //   const tokenToDelete = `tokens.${index}.token`;
+  // removeActionToken(token: string, index: number): Promise<IUser | null> { // by mongo $unset
   //   const elementToDelete = `tokens.${index}`;
   //
   //   return UserModel.updateOne(
-  //     {[tokenToDelete]: token},
-  //     // {$unset: {[tokenToDelete]: ''}} // remove 'token'-field
-  //     {$unset: {[elementToDelete]: ''}} // leave null
+  //     {'tokens.token': token},
+  //     // {$unset: {[tokenToDelete]: ''}} // remove 'token'-field from array only
+  //     {$unset: {[elementToDelete]: ''}} // remove whole element of array but leave null
   //   ) as any;
   // }
+
+  removeActionToken(token: string): Promise<IUser | null> { // by mongo $pull
+    return UserModel.updateOne(
+      {'tokens.token': token },
+      {$pull: {tokens: {token}}}
+    ) as any;
+  }
 }
 
 export const userService = new UserService();
