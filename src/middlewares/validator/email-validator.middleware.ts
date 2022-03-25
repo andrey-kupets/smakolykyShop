@@ -4,7 +4,7 @@ import { emailValidator } from '../../validators';
 import { ErrorHandler } from '../../errors';
 import { ResponseStatusCodesEnum } from '../../constants';
 
-export const emailValidatorMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const emailValidatorMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const {error} = Joi.validate(req.body, emailValidator);
 
   if (error) {

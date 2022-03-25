@@ -4,7 +4,7 @@ import * as Joi from 'joi';
 import { newUserValidator } from '../../validators';
 
 export const checkIsUserValidMiddleware =
-  (req: Request, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction): void => {
     const {error} = Joi.validate(req.body, newUserValidator);
 
     if (error) {
