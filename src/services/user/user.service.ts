@@ -11,9 +11,9 @@ class UserService {
     return userToCreate.save();
   }
 
-  addActionToken(id: string, tokenObject: IUserToken): Promise<IUser> {
+  addActionToken(userId: string, tokenObject: IUserToken): Promise<IUser> {
     return UserModel.updateOne(
-      {_id: Types.ObjectId(id)},
+      {_id: Types.ObjectId(userId)},
       {
         $push: {
           tokens: tokenObject

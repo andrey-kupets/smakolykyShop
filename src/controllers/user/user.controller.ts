@@ -1,21 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import * as Joi from 'joi';
 
 import { ActionEnum, LogEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum } from '../../constants';
 import { hashPassword, tokenizer } from '../../helpers';
 import { logService, mailService, userService } from '../../services';
-import { newUserValidator } from '../../validators';
 import { IRequestExtended, IUser } from '../../models';
 import { customErrors, ErrorHandler } from '../../errors';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
     const user = req.body as IUser;
-    const {error} = Joi.validate(user, newUserValidator);
-
-    if (error) {
-      return next(new Error(error.details[0].message));
-    }
 
     user.password = await hashPassword(user.password);
 
@@ -45,7 +38,7 @@ class UserController {
 
     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
 
-    // 1st way by js
+    // // 1st way by js
     // const index = tokens.findIndex(({action, token}) => action === ActionEnum.USER_REGISTER && token === tokenToDelete);
     //
     // if (index !== -1) {
@@ -54,10 +47,21 @@ class UserController {
     //   await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
     // }
 
-    // 2nd way by mongo
+    // // 2nd way by mongo
     // await userService.removeActionToken(tokenToDelete as string, index as number); // for 2.1-way  $unset
     await userService.removeActionToken(tokenToDelete as string); // for 2.2-way $pull
     await logService.createLog({event: LogEnum.USER_CONFIRMED, userId: _id});
+
+    res.end();
+  }
+
+  async forgotPassword(req: IRequestExtended, res: Response, next: NextFunction) {
+    const {_id, email} = req.user as IUser;
+
+    const {access_token} = tokenizer(ActionEnum.FORGOT_PASSWORD);
+
+    await userService.addActionToken(_id, {action: ActionEnum.FORGOT_PASSWORD, token: access_token});
+    await mailService.sendMail(email, ActionEnum.FORGOT_PASSWORD, {token: access_token});
 
     res.end();
   }
