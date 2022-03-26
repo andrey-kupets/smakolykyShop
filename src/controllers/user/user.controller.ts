@@ -65,6 +65,23 @@ class UserController {
 
     res.end();
   }
+
+  async setForgotPass(req: IRequestExtended, res: Response, next: NextFunction) {
+    // const {_id, status, tokens = []} = req.user as IUser; // for 1st way
+    const {_id, status} = req.user as IUser; // for 2nd way
+    const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
+
+    if (status !== UserStatusEnum.PENDING) {
+      return next(
+        new ErrorHandler(
+          ResponseStatusCodesEnum.BAD_REQUEST,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.message,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.code)
+      );
+    }
+
+    await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
+  }
 }
 
 export const userController = new UserController();

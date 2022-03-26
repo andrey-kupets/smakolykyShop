@@ -3,9 +3,9 @@ import { userController } from '../../controllers';
 import {
   checkConfirmTokenMiddleware,
   checkDoesEmailAlreadyExistMiddleware,
-  checkDoesUserExistMiddleware,
+  checkDoesUserExistMiddleware, checkForgotPassTokenMiddleware,
   checkIsUserValidMiddleware,
-  emailValidatorMiddleware
+  emailValidatorMiddleware, singlePasswordValidatorMiddleware
 } from '../../middlewares';
 
 const router = Router();
@@ -21,5 +21,9 @@ router.post('/password/forgot',
   emailValidatorMiddleware,
   checkDoesUserExistMiddleware,
   userController.forgotPassword);
+router.post('/password/reset',
+  singlePasswordValidatorMiddleware,
+  checkForgotPassTokenMiddleware,
+  userController.setForgotPass);
 
 export const userRouter = router;
