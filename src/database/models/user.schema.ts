@@ -57,4 +57,4 @@ export const UserSchema = new Schema<IUser>({ // UserSchema: Schema
   tokens: [tokenSubModel]
 }, {timestamps: true});
 
-export const UserModel: Model<UserType> = model<UserType>(TableNamesEnum.USER, UserSchema);
+export const UserModel: Model<UserType> = model<UserType>(TableNamesEnum.USERS, UserSchema);

@@ -1,8 +1,10 @@
+import { ProductTypeEnum } from '../constants';
+
 export interface IProduct {
   _id: string
   title: string
   description: string
-  type: string // TODO type enum
+  type: ProductTypeEnum
   category: string
   price: number
   hasDiscount: boolean
@@ -11,6 +13,7 @@ export interface IProduct {
   photo?: string[]
   docs?: string[]
   stockCount: number
-  createdAt: string
-  updatedAt: string
+  userId: string
+  // createdAt: string
+  // updatedAt: string
 }
