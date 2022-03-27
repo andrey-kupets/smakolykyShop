@@ -2,14 +2,14 @@ import { AccessTokenModel } from '../../database';
 import { IAccessToken } from '../../models';
 
 class AuthService {
-  createTokenPair(tokenObject: Partial<IAccessToken>) {
+  createTokenPair(tokenObject: Partial<IAccessToken>): Promise<IAccessToken> {
     const tokensToCreate = new AccessTokenModel(tokenObject);
 
     return tokensToCreate.save();
   }
 
-  findUserByToken(findObject: {accessToken?: string, refreshToken?: string}) {
-    return AccessTokenModel.findOne(findObject);
+  findUserByToken(findObject: {access_token?: string, refresh_token?: string}): Promise<IAccessToken | null> {
+    return AccessTokenModel.findOne(findObject) as any;
   }
 }
 

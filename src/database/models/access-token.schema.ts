@@ -6,11 +6,11 @@ import { TableNamesEnum } from '../../constants';
 export type AccessTokenType = IAccessToken & Document;
 
 export const AccessTokenSchema = new Schema<IAccessToken>({ // AccessTokenSchema: Schema
-  access_token: {
+  accessToken: {
     type: String,
     required: true
   },
-  refresh_token: {
+  refreshToken: {
     type: String,
     required: true
   },
