@@ -1,23 +1,35 @@
 import { NextFunction, Response } from 'express';
 
-import { ActionEnum } from '../../constants';
+import { ActionEnum, ResponseStatusCodesEnum } from '../../constants';
 import { IRequestExtended, IUser } from '../../models';
-import { tokenizer } from '../../helpers';
+import { comparePasswords, tokenizer } from '../../helpers';
 import { authService } from '../../services';
+import { customErrors, ErrorHandler } from '../../errors';
 
 class AuthController {
   async authUser(req: IRequestExtended, res: Response, next: NextFunction) {
-    const {_id} = req.user as IUser;
+    try {
+      const {_id, password} = req.user as IUser;
+      const authInfo = req.body;
 
-    const {access_token, refresh_token} = tokenizer(ActionEnum.USER_AUTH);
+      const doPasswordsEqual = await comparePasswords(authInfo.password, password);
 
-    const {accessToken, refreshToken} = await authService.createTokenPair({
-      accessToken: access_token,
-      refreshToken: refresh_token,
-      userId: _id
-    });
+      if (!doPasswordsEqual) {
+        return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));
+      }
 
-    res.json({accessToken, refreshToken});
+      const {access_token, refresh_token} = tokenizer(ActionEnum.USER_AUTH);
+
+      await authService.createTokenPair({
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        userId: _id
+      });
+
+      res.json({access_token, refresh_token});
+    } catch (e) {
+      return next(e);
+    }
   }
 }
 
