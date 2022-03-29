@@ -1,6 +1,6 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
-import { ActionEnum, ResponseStatusCodesEnum } from '../../constants';
+import { ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum } from '../../constants';
 import { IRequestExtended, IUser } from '../../models';
 import { comparePasswords, tokenizer } from '../../helpers';
 import { authService } from '../../services';
@@ -30,6 +30,14 @@ class AuthController {
     } catch (e) {
       return next(e);
     }
+  }
+
+  async logoutUser(req: Request, res: Response, next: NextFunction) {
+    const accessToken = req.get(RequestHeadersEnum.AUTHORIZATION);
+
+    await authService.removeToken({accessToken});
+
+    res.sendStatus(ResponseStatusCodesEnum.NO_CONTENT);
   }
 }
 

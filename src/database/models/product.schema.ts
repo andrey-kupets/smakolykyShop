@@ -33,7 +33,7 @@ export const ProductSchema = new Schema<IProduct>({ // ProductSchema: Schema
   },
   oldPrice: {
     type: Number,
-    required: false,
+    required: false
   },
   tags: {
     type: Array,
