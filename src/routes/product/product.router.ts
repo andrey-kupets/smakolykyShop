@@ -1,9 +1,9 @@
 import {Router} from 'express';
 import { productController } from '../../controllers';
-import { checkDoesUserExistByEmailMiddleware } from '../../middlewares';
+import { checkAccessTokenMiddleware } from '../../middlewares';
 
 const router = Router();
 
-router.post('/', checkDoesUserExistByEmailMiddleware, productController.createProduct);
+router.post('/', checkAccessTokenMiddleware, productController.createProduct);
 
 export const productRouter = router;

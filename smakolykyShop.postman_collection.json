@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "096aeba2-23e9-4171-bb20-8bd8c9297cf9",
+		"name": "smakolykyShop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"andre\",\r\n    \"surname\": \"gestko\",\r\n    \"email\": \"andre@gmail.com\",\r\n    \"password\": \"andre111\",\r\n    \"age\": 41\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/users",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDg2NjU5NjYsImV4cCI6MTY0ODc1MjM2Nn0.4LUnzyAYGSPydaGRGPD0KuZfq0HFcsRbsyHBMe0o_Wg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/users/confirm",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"andrey.kupets@i.ua\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/users/password/forgot",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"password",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set new password (reset if forgot)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDgzMTU4NjcsImV4cCI6MTY0ODQwMjI2N30.2ZWfq8Fp4nipnZb_HXTjj6cFOdc_vXnJ5UdPEftjsBI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"Andre222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/users/password/reset",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user auth",
+			"item": [
+				{
+					"name": "auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"andrey.kupets@i.ua\",\r\n    \"password\": \"Andre111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/auth",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDg3NDYxNjgsImV4cCI6MTY0ODc0NzM2OH0.DBe5Xtf-I2wfyeN2Bd4Wc5plLhx-wUOVnhVOHAwR2ug",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/auth/logout",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API_HOST}}/products",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
