@@ -3,14 +3,16 @@ import { authController } from '../../controllers';
 import {
   checkAccessTokenMiddleware,
   checkDoesUserExistByEmailMiddleware,
-  emailValidatorMiddleware
+  checkIsUserConfirmedMiddleware,
+  emailPasswordValidationMiddleware
 } from '../../middlewares';
 
 const router = Router();
 
 router.post('/',
-  emailValidatorMiddleware,
+  emailPasswordValidationMiddleware,
   checkDoesUserExistByEmailMiddleware,
+  checkIsUserConfirmedMiddleware,
   authController.authUser
 );
 router.post('/logout',

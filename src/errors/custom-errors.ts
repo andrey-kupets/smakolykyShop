@@ -14,6 +14,17 @@ export const customErrors = {
     message: 'Token not found'
   },
 
+  //401
+  UNAUTHORIZED_BAD_TOKEN: {
+    message: 'Something wrong with token'
+  },
+
+  //403
+  FORBIDDEN_USER_NOT_CONFIRMED: {
+    message: 'User not confirmed',
+    code: 4031
+  },
+
   //404
   NOT_FOUND: {
     message: 'Record not found'
