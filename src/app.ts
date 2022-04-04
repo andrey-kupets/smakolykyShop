@@ -10,7 +10,12 @@ import * as path from 'path';
 import * as mongoose from 'mongoose';
 
 import { config } from './config';
-import { authRouter, productRouter, userRouter } from './routes';
+import {
+  authRouter,
+  cartRouter,
+  productRouter,
+  userRouter
+} from './routes';
 import { ResponseStatusCodesEnum } from './constants';
 
 dotenv.config();
@@ -84,6 +89,7 @@ class App {
   private mountRoutes(): void {
     // this.app.use('/admin', adminRouter);
     this.app.use('/auth', authRouter);
+    this.app.use('/cart', cartRouter);
     this.app.use('/products', productRouter);
     this.app.use('/users', userRouter);
   }
