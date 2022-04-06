@@ -1,11 +1,11 @@
-import { Document, Model, model, Schema } from 'mongoose';
+import {Document, Model, model, Schema} from 'mongoose';
 
-import { ICart } from '../../models';
-import { CartStatusEnum, TableNamesEnum } from '../../constants';
+import {ICart} from '../../models';
+import {CartStatusEnum, TableNamesEnum} from '../../constants';
 
 export type CartType = ICart & Document;
 
-const ProductSubModel = {
+const productSubModel = {
   productId: {
     type: Schema.Types.ObjectId,
     required: true
@@ -20,8 +20,8 @@ const ProductSubModel = {
   }
 };
 
-export const CartSchema = new Schema<ICart>({// CartSchema: Schema
-  products: [ProductSubModel],
+export const CartSchema = new Schema<ICart>({ // CartSchema: Schema
+  products: [productSubModel],
   userId: {
     type: Schema.Types.ObjectId,
     ref: TableNamesEnum.USERS
@@ -32,9 +32,11 @@ export const CartSchema = new Schema<ICart>({// CartSchema: Schema
     default: CartStatusEnum.IN_PROGRESS,
     enum: Object.values(CartStatusEnum)
   },
-  sum: Number,
-  required: true,
-  default: 0
+  sum: {
+    type: Number,
+    required: true,
+    default: 0
+  }
 }, {
   timestamps: true
 });
