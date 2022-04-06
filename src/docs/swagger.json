@@ -1,0 +1,9 @@
+ {
+   "swagger": "2.0",
+   "info": {
+   "version": "0.0.1-alpha",
+     "title": "Smakolyky Shop",
+     "description": "Documentation for Smakolyky Shop (c) Andrii Pinskyi"
+ },
+   "paths": {}
+ }
