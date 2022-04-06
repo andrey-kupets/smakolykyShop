@@ -5,5 +5,56 @@
      "title": "Smakolyky Shop",
      "description": "Documentation for Smakolyky Shop (c) Andrii Pinskyi"
  },
-   "paths": {}
+   "paths": {
+     "/auth": {
+       "post": {
+         "summary": "Auth user",
+         "description": "Method for user login to platform",
+         "operationId": "authUser",
+         "parameters": [
+           {
+             "name": "email",
+             "in": "body",
+             "required": true,
+             "schema": {
+               "type": "string",
+               "example": "example@gmail.com"
+             }
+           },
+           {
+             "name": "password",
+             "in": "body",
+             "required": true,
+             "schema": {
+               "type": "string",
+               "example": "Pa$$w0rd!"
+             }
+           }
+         ],
+         "responses": {
+           "200": {
+             "description": "Auth was successful",
+             "schema": {
+               "$ref": "#/definitions/authUserResponse"
+             }
+           }
+         }
+       }
+     }
+   },
+   "definitions": {
+     "authUserResponse": {
+       "type": "object",
+       "properties": {
+         "access_token": {
+           "type": "string",
+           "example": "dscsdcE$R#$%fvsdvfdvdfvadfv898"
+         },
+         "refresh_token": {
+           "type": "string",
+           "example": "dsc6756sdcE$R#$%fvsdvfdvdfvadfv898"
+         }
+       }
+     }
+   }
  }
