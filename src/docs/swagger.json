@@ -8,6 +8,7 @@
    "paths": {
      "/auth": {
        "post": {
+         "tags": ["auth"],
          "summary": "Auth user",
          "description": "Method for user login to platform",
          "operationId": "authUser",
@@ -31,11 +32,56 @@
              }
            }
          ],
+         "produces": [
+           "application/json"
+         ],
          "responses": {
            "200": {
              "description": "Auth was successful",
              "schema": {
                "$ref": "#/definitions/authUserResponse"
+             }
+           }
+         }
+       }
+     },
+     "/auth/logout": {
+       "post": {
+         "tags": ["auth"],
+         "summary": "Logout user",
+         "description": "Method for user logout from platform",
+         "operationId": "logoutUser",
+         "parameters": [
+           {
+             "name": "Authorization",
+             "in": "header",
+             "required": true,
+             "schema": {
+               "type": "string",
+               "example": "gdbngbdt54t534#$%T$%Y34145"
+             }
+           }
+         ],
+         "produces": [
+           "application/json"
+         ],
+         "responses": {
+           "200": {
+             "description": "Auth was successful",
+             "schema": {
+               "$ref": "#/definitions/authUserResponse"
+             }
+           },
+           "401": {
+             "description": "Wrong or dead token",
+             "schema": {
+               "type": "object",
+               "properties": {
+                 "message": {
+                   "type": "string",
+                   "example": "Something wrong with token"
+                 }
+               }
              }
            }
          }
