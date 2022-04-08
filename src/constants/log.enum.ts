@@ -3,4 +3,6 @@ export enum LogEnum {
   USER_LOGIN = 'user_login',
   USER_LOGOUT = 'user_logout',
   USER_REGISTER = 'user_register',
+
+  PRODUCT_CREATED = 'product_created'
 }
