@@ -1,0 +1,106 @@
+ {
+   "swagger": "2.0",
+   "info": {
+   "version": "0.0.1-alpha",
+     "title": "Smakolyky Shop",
+     "description": "Documentation for Smakolyky Shop (c) Andrii Pinskyi"
+ },
+   "paths": {
+     "/auth": {
+       "post": {
+         "tags": ["auth"],
+         "summary": "Auth user",
+         "description": "Method for user login to platform",
+         "operationId": "authUser",
+         "parameters": [
+           {
+             "name": "email",
+             "in": "body",
+             "required": true,
+             "schema": {
+               "type": "string",
+               "example": "example@gmail.com"
+             }
+           },
+           {
+             "name": "password",
+             "in": "body",
+             "required": true,
+             "schema": {
+               "type": "string",
+               "example": "Pa$$w0rd!"
+             }
+           }
+         ],
+         "produces": [
+           "application/json"
+         ],
+         "responses": {
+           "200": {
+             "description": "Auth was successful",
+             "schema": {
+               "$ref": "#/definitions/authUserResponse"
+             }
+           }
+         }
+       }
+     },
+     "/auth/logout": {
+       "post": {
+         "tags": ["auth"],
+         "summary": "Logout user",
+         "description": "Method for user logout from platform",
+         "operationId": "logoutUser",
+         "parameters": [
+           {
+             "name": "Authorization",
+             "in": "header",
+             "required": true,
+             "schema": {
+               "type": "string",
+               "example": "gdbngbdt54t534#$%T$%Y34145"
+             }
+           }
+         ],
+         "produces": [
+           "application/json"
+         ],
+         "responses": {
+           "200": {
+             "description": "Auth was successful",
+             "schema": {
+               "$ref": "#/definitions/authUserResponse"
+             }
+           },
+           "401": {
+             "description": "Wrong or dead token",
+             "schema": {
+               "type": "object",
+               "properties": {
+                 "message": {
+                   "type": "string",
+                   "example": "Something wrong with token"
+                 }
+               }
+             }
+           }
+         }
+       }
+     }
+   },
+   "definitions": {
+     "authUserResponse": {
+       "type": "object",
+       "properties": {
+         "access_token": {
+           "type": "string",
+           "example": "dscsdcE$R#$%fvsdvfdvdfvadfv898"
+         },
+         "refresh_token": {
+           "type": "string",
+           "example": "dsc6756sdcE$R#$%fvsdvfdvdfvadfv898"
+         }
+       }
+     }
+   }
+ }
