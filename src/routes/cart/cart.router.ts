@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { cartController } from '../../controllers';
 import {
+  addProductToCartValidationMiddleware,
   checkAccessTokenMiddleware,
   checkDoesProductExistMiddleware,
   checkIsUserConfirmedMiddleware
@@ -15,6 +16,7 @@ router.get('/proceed', cartController.getUserCart);
 
 router.use('/products/:productId', checkDoesProductExistMiddleware);
 router.post('/products/:productId',
+  addProductToCartValidationMiddleware,
   cartController.addProductToCart
 );
 

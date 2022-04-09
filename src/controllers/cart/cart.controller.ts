@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 
 import { IProduct, IRequestExtended, IUser } from '../../models';
-import { cartService } from '../../services';
+import { cartService, productService } from '../../services';
 import { customErrors, ErrorHandler } from '../../errors';
 import { ResponseStatusCodesEnum } from '../../constants';
 
@@ -24,7 +24,9 @@ class CartController {
 
       const updatedCart = await cartService.addProductToCart(userCart, product, count);
 
-      res.json(updatedCart); // TODO getCartById
+      await productService.updateProductById(product._id, {stockCount: product.stockCount - count});
+
+      res.json(updatedCart);
     } catch (e) {
       next(e);
     }
