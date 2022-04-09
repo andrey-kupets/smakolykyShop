@@ -10,12 +10,12 @@ class CartService {
     return cartToCreate.save();
   }
 
-  addProductToCart(userCart: ICart, product: IProduct, productCount: number): Promise<ICart> {
+  addProductToCart(userCart: ICart, product: IProduct, productCount: number): Promise<ICart | null> {
     const productIndex = userCart.products.findIndex((value: ICartProduct) => {
       return value.productId.toString() === product._id.toString();
     });
 
-    if (productIndex !== 1) {
+    if (productIndex !== -1) {
       userCart.products[productIndex].count += productCount;
     } else {
       userCart.products.push({
@@ -30,15 +30,15 @@ class CartService {
     return this.updateCart(userCart._id, userCart);
   }
 
-  findUserProceedCart(_id: string): Promise<ICart> {
+  findUserProceedCart(userId: string): Promise<ICart | null> {
     return CartModel.findOne({
       status: CartStatusEnum.IN_PROGRESS,
-      userId: _id
+      userId
     }) as any;
   }
 
-  updateCart(_id: string, cartToUpdate: ICart) {
-    return CartModel.updateOne({_id}, cartToUpdate) as any;
+  updateCart(_id: string, cartToUpdate: ICart): Promise<ICart | null> {
+    return CartModel.findOneAndUpdate({_id}, cartToUpdate, {new: true}) as any;
   }
 }
 

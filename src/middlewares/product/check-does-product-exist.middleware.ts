@@ -17,7 +17,10 @@ export const checkDoesProductExistMiddleware = async (req: IRequestExtended, res
     return next(new ErrorHandler(ResponseStatusCodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_NO_STOCK.message));
   }
 
-  req.product = product;
+  if (!product.stockCount) {
+    return next(new ErrorHandler(ResponseStatusCodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_NO_STOCK.message));
+  }
 
+  req.product = product;
   next();
 };

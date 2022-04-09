@@ -10,6 +10,9 @@ import {
 const router = Router();
 
 router.use(checkAccessTokenMiddleware, checkIsUserConfirmedMiddleware);
+
+router.get('/proceed', cartController.getUserCart);
+
 router.use('/products/:productId', checkDoesProductExistMiddleware);
 router.post('/products/:productId',
   cartController.addProductToCart

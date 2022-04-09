@@ -18,6 +18,10 @@ export const customErrors = {
     message: 'Stock count is zero'
   },
 
+  BAD_REQUEST_LOW_STOCK: {
+    message: 'Stock count is low'
+  },
+
   //401
   UNAUTHORIZED_BAD_TOKEN: {
     message: 'Something wrong with token'

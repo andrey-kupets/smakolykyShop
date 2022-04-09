@@ -2,22 +2,43 @@ import { NextFunction, Response } from 'express';
 
 import { IProduct, IRequestExtended, IUser } from '../../models';
 import { cartService } from '../../services';
+import { customErrors, ErrorHandler } from '../../errors';
+import { ResponseStatusCodesEnum } from '../../constants';
 
 class CartController {
   async addProductToCart(req: IRequestExtended, res: Response, next: NextFunction) {
-    const {_id: userId} = req.user as IUser;
-    const product = req.product as IProduct;
-    const {count} = req.body;
+    try {
+      const {_id: userId} = req.user as IUser;
+      const product = req.product as IProduct;
+      const {count} = req.body;
 
-    let userCart = await cartService.findUserProceedCart(userId);
+      if (count > product.stockCount) {
+        return next(new ErrorHandler(ResponseStatusCodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_LOW_STOCK.message));
+      }
 
-    if (!userCart) {
-      userCart = await cartService.createCart({userId});
+      let userCart = await cartService.findUserProceedCart(userId);
+
+      if (!userCart) {
+        userCart = await cartService.createCart({userId});
+      }
+
+      const updatedCart = await cartService.addProductToCart(userCart, product, count);
+
+      res.json(updatedCart); // TODO getCartById
+    } catch (e) {
+      next(e);
     }
+  }
 
-    const updatedCart = await cartService.addProductToCart(userCart, product, count);
+  async getUserCart(req: IRequestExtended, res: Response, next: NextFunction) {
+    try {
+      const {_id: userId} = req.user as IUser;
+      const userCart = await cartService.findUserProceedCart(userId);
 
-    res.json(updatedCart); // TODO getCartById
+      res.json(userCart);
+    } catch (e) {
+      next(e);
+    }
   }
 }
 
