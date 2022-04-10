@@ -14,6 +14,6 @@ export interface IProduct {
   docs?: string[]
   stockCount: number
   userId: string
-  // createdAt: string
-  // updatedAt: string
+  createdAt: string
+  updatedAt: string
 }

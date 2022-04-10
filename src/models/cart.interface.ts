@@ -12,6 +12,6 @@ export interface ICart {
   userId: string
   status: CartStatusEnum
   sum: number
-  // createdAt: string
-  // updatedAt: string
+  createdAt: string
+  updatedAt: string
 }
