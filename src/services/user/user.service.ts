@@ -23,7 +23,7 @@ class UserService {
   }
 
   findOneByParams(findObject: Partial<IUser>): Promise<IUser | null> {
-    return UserModel.findOne(findObject) as any;
+    return UserModel.findOne(findObject).exec();
   }
 
   updateUserByParams(params: Partial<IUser>, update: Partial<IUser>): Promise<IUser> {
@@ -36,7 +36,7 @@ class UserService {
         {'tokens.action': action},
         {'tokens.token': token}
       ]
-    }) as any;
+    }).exec();
   }
 
   // removeActionToken(token: string, index: number): Promise<IUser | null> { // by mongo $unset

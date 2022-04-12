@@ -34,15 +34,16 @@ class CartService {
     return CartModel.findOne({
       status: CartStatusEnum.IN_PROGRESS,
       userId
-    }) as any;
+    })
+      .exec();
   }
 
   updateCart(_id: string, cartToUpdate: ICart): Promise<ICart | null> {
-    return CartModel.findOneAndUpdate({_id}, cartToUpdate, {new: true}) as any;
+    return CartModel.findOneAndUpdate({_id}, cartToUpdate, {new: true}).exec();
   }
 
   getCartsByParams(findObject: Partial<ICart>): Promise<ICart[]> {
-    return CartModel.find(findObject) as any;
+    return CartModel.find(findObject).exec();
   }
 
   deleteCartById(_id: string) {
